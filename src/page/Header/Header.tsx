@@ -10,6 +10,7 @@ import { LanguageToggle } from "../../components/Settings/LanguageToggle";
 import { FavoritesContext } from "../../contexts/FavoritesContext";
 import { useTheme } from "../../contexts/ThemeContext";
 import "./Header.css";
+import type { UserSettings } from "../../types";
 
 export const Header: React.FC<PropsWithChildren> = () => {
   const userContext = useContext(UserContext);
