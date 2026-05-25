@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { CookieService } from "../api/cookieService";
-import type { UserSettings } from "../types";
-
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     const persistTheme = localStorage.getItem("persist_theme") === "true";
     let initialTheme: "light" | "dark" | null = null;
 
-    if (persistTheme) {
-      const settings: UserSettings | null = CookieService.getSettingsCookie(); // Read from cookie
-      if (settings?.theme) {
-        initialTheme = settings.theme;
-      }
-    } else {
+    if (!persistTheme) {
       // Fallback to non-persisted local storage if persistence is off
       initialTheme = localStorage.getItem("theme") as "light" | "dark" | null;
     }

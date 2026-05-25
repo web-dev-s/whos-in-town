@@ -20,11 +20,22 @@ export const Header: React.FC<PropsWithChildren> = () => {
   const [user, setUser] = useMediatorState(userContext.user);
   const [isAuthenticated, setIsAuthenticated] = useMediatorState(userContext.isAuthenticated);
   const favoritesContext = useContext(FavoritesContext);
-  const [favorites, setFavorites] = useMediatorState(favoritesContext.favorites);
+  const [, setFavorites] = useMediatorState(favoritesContext.favorites);
 
   const [isSettingsLoaded, setIsSettingsLoaded] = useState(false);
 
-  // Sync settings with user-specific cookie via CookieService
+  // Restore user session from cookie on mount to fix hydration on refresh
+  useEffect(() => {
+    (() => {
+      const sessionUser = CookieService.getUserSession();
+      if (sessionUser) {
+        setUser(sessionUser);
+        setIsAuthenticated(true);
+      }
+    })();
+  }, []);
+
+  // Sync theme and language with user-specific cookie
   useEffect(() => {
     if (!isAuthenticated || !user) {
       if (isSettingsLoaded){(()=>{setIsSettingsLoaded(false);})() }
@@ -35,25 +46,34 @@ export const Header: React.FC<PropsWithChildren> = () => {
     if (!isSettingsLoaded) {
       const settings = CookieService.getSettingsCookie(user.id);
       if (settings) {
-        setFavorites(settings.favorites || []);
         if (settings.lang) i18n.changeLanguage(settings.lang);
         if (settings.theme && theme !== settings.theme) toggleTheme();
-      } else {
-        setFavorites([]);
       }
       (()=>{ setIsSettingsLoaded(true);})()
      
       return;
     }
-
-    // Persist changes to the cookie
-    if (localStorage.getItem("persist_favourites") === "true") {
-      const current = CookieService.getSettingsCookie(user.id) || {};
-      CookieService.setSettingsCookie(user.id, { ...current, favorites });
-    }
-  }, [favorites, isAuthenticated, user, isSettingsLoaded, setFavorites, i18n, toggleTheme]);
+  }, [isAuthenticated, user, isSettingsLoaded, i18n, toggleTheme, theme]);
 
   const handleLogout = () => {
+    // Explicitly save favorites and settings before clearing the session
+    if (user) {
+      const currentSettings = CookieService.getSettingsCookie(user.id) || {};
+      const settingsToSave: UserSettings = {
+        ...currentSettings,
+        favorites: localStorage.getItem("persist_favourites") === "true" 
+          ? favoritesContext.favorites.getValue() 
+          : currentSettings.favorites,
+        theme: localStorage.getItem("persist_theme") === "true" 
+          ? theme 
+          : currentSettings.theme,
+        lang: localStorage.getItem("persist_language") === "true" 
+          ? i18n.language as "en" | "de" 
+          : currentSettings.lang
+      };
+      CookieService.setSettingsCookie(user.id, settingsToSave);
+    }
+
     CookieService.removeUserSession();
     setUser(null);
     setIsAuthenticated(false);

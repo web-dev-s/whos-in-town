@@ -77,18 +77,6 @@ export const LoginModal: React.FC = () => {
         setUser(foundUser);
         setIsAuthenticated(true);
 
-        const userSettings = CookieService.getSettingsCookie(foundUser.id);
-        console.log("Loaded user settings from cookie:", userSettings);
-        if (userSettings?.favorites) {
-          setFavorites(userSettings.favorites);
-        }
-        if (userSettings?.lang) {
-          i18n.changeLanguage(userSettings.lang);
-        }
-        if (userSettings?.theme && theme !== userSettings.theme) {
-          toggleTheme();
-        }
-
         handleClose();
         setHighlightRegisterButton(false);
       } else {

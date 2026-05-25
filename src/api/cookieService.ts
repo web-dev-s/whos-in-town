@@ -42,7 +42,11 @@ export const CookieService = {
   },
 
   setSettingsCookie: (userId: number, settings: UserSettings): void => {
-    const value = btoa(JSON.stringify(settings));
+    const binString = Array.from(
+      new TextEncoder().encode(JSON.stringify(settings)),
+      (byte) => String.fromCharCode(byte)
+    ).join("");
+    const value = btoa(binString);
     document.cookie = `${getSettingsCookieName(userId)}=${value}; Max-Age=${SETTINGS_DURATION_SECONDS}; path=/; SameSite=Lax`;
   },
 
@@ -58,8 +62,12 @@ export const CookieService = {
       }
       if (c.indexOf(name) === 0) {
         try {
-          const value = atob(c.substring(name.length, c.length));
-          return JSON.parse(value) as UserSettings;
+          const binString = atob(c.substring(name.length, c.length));
+          const uint8Array = Uint8Array.from(binString, (char) =>
+            char.charCodeAt(0)
+          );
+          const jsonString = new TextDecoder().decode(uint8Array);
+          return JSON.parse(jsonString) as UserSettings;
         } catch (e) {
           console.error("Failed to parse user settings cookie", e);
           return null;
