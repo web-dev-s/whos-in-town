@@ -1,0 +1,64 @@
+{
+  "buttons": {
+    "search": "Suchen",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "signIn": "Einloggen",
+    "signUp": "Registrieren",
+    "close": "Schließen",
+    "logout": "Abmelden",
+    "addToFavorites": "Zu Favoriten hinzufügen",
+    "removeFromFavorites": "Aus Favoriten entfernen"
+  },
+  "titles": {
+    "results": "Ergebnisse",
+    "selectedEvent": "Gewähltes Event",
+    "favorites": "Favoriten",
+    "venueInformation": "Veranstaltungsort Informationen",
+    "description": "Beschreibung",
+    "availableOffers": "Verfügbare Angebote"
+  },
+  "messages": {
+    "searching": "Suche...",
+    "errorFindingArtist": "Fehler bei der Künstlersuche",
+    "noFavourites": "Noch keine Favoriten vorhanden.",
+    "selectEventPrompt": "Wählen Sie ein Event aus der Liste aus, um Details anzuzeigen.",
+    "tapItem": "Tippen Sie auf ein Element, um es zu öffnen, oder schließen Sie es, um weiter zu stöbern.",
+    "userNotFound": "Benutzer nicht gefunden. Bitte registrieren Sie sich oder überprüfen Sie Ihre Anmeldedaten.",
+    "alreadyHaveAccount": "Sie haben bereits ein Konto?",
+    "dontHaveAccount": "Sie haben noch kein Konto?",
+    "fillFields": "Bitte füllen Sie alle Felder aus.",
+    "userExists": "Benutzer mit dieser E-Mail existiert bereits."
+  },
+  "labels": {
+    "username": "Benutzername",
+    "email": "E-Mail",
+    "dateTime": "Datum & Uhrzeit",
+    "location": "Ort",
+    "cityCountry": "Stadt, Land"
+  },
+  "placeholders": {
+    "searchArtist": "Suche nach einem Künstler...",
+    "enterUsername": "Benutzername eingeben",
+    "enterEmail": "E-Mail eingeben"
+  },
+  "footer": {
+    "text": "© {{year}} Who's In Town. Entdecke deine Lieblingskünstler auf Tour."
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "persistFavourites": "Favoriten speichern",
+    "persistLanguage": "Sprache speichern",
+    "persistTheme": "Theme speichern",
+    "language": "Sprache",
+    "theme": "Design",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "close": "Schließen",
+    "saveAndClose": "Speichern & Schließen"
+  },
+  "cookieBanner": {
+    "text": "Diese Website verwendet Cookies, um sicherzustellen, dass Sie das beste Erlebnis auf unserer Website erhalten.",
+    "accept": "Akzeptieren"
+  }
+}

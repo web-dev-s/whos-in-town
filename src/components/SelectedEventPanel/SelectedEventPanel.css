@@ -1,0 +1,242 @@
+.selected-event-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.selected-event-card.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: var(--text-tertiary);
+  text-align: center;
+  min-height: 300px;
+}
+
+.event-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--border-light);
+}
+
+.event-details-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--card-text);
+  flex: 1;
+}
+
+.fav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  transition: all 0.2s ease;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.fav-btn:hover {
+  color: var(--danger-color);
+  background-color: var(--bg-tertiary);
+}
+
+.fav-btn.active {
+  color: var(--danger-color);
+}
+
+.event-details-body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Metadata Section */
+.metadata-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 5px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border-light);
+}
+
+.metadata-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.metadata-item svg {
+  color: var(--primary-color);
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.metadata-item > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Venue Section */
+.venue-section {
+  padding: 5px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border-light);
+}
+
+.venue-section h4,
+.description-section h4,
+.offers-section h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+} 
+.venue-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.venue-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.venue-item svg {
+  color: var(--success-color);
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.venue-item > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+/* Description Section */
+.description-section {
+  background-color: var(--card-bg);
+  padding: 12px 14px;
+  border-radius: 12px;
+  border-left: 4px solid #8b5cf6;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.description-section p {
+  margin: 0.5rem 0 0;
+  line-height: 1.5;
+  color: var(--card-text);
+  font-size: 0.95rem;
+}
+
+/* Offers Section */
+.offers-section {
+  background-color: var(--card-bg);
+  padding: 12px 16px;
+  border-radius: 12px;
+  border-left: 4px solid var(--accent-border);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.offers-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.offer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem;
+  background-color: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  width: fit-content;
+}
+
+.offer-link:hover {
+  background-color: var(--primary-hover);
+  transform: translateX(2px);
+}
+
+/* Label and Value Styling */
+.label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-tertiary);
+  margin-bottom: 0.25rem;
+}
+
+.value {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--card-text);
+}
+
+/* Favorite Action Button */
+.favorite-action-btn {
+  margin-top: auto;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--danger-color);
+  background-color: var(--card-bg);
+  color: var(--danger-color);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.favorite-action-btn:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.favorite-action-btn.active {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.favorite-action-btn:active {
+  transform: scale(0.98);
+}

@@ -1,0 +1,64 @@
+{
+    "buttons": {
+        "search": "Search",
+        "login": "Login",
+        "register": "Register",
+        "signIn": "Sign In",
+        "signUp": "Sign Up",
+        "close": "Close",
+        "logout": "Logout",
+        "addToFavorites": "Add to Favorites",
+        "removeFromFavorites": "Remove from Favorites"
+    },
+    "titles": {
+        "results": "Results",
+        "selectedEvent": "Selected Event",
+        "favorites": "Favorites",
+        "venueInformation": "Venue Information",
+        "description": "Description",
+        "availableOffers": "Available Offers"
+    },
+    "messages": {
+        "searching": "Searching...",
+        "errorFindingArtist": "Error finding artist",
+        "noFavourites": "No favorite events yet.",
+        "selectEventPrompt": "Select an event from the list to view more details.",
+        "tapItem": "Tap an item to open it, or close to continue browsing.",
+        "userNotFound": "User not found. Please register or check your credentials.",
+        "alreadyHaveAccount": "Already have an account?",
+        "dontHaveAccount": "Don't have an account?",
+        "fillFields": "Please fill in all fields.",
+        "userExists": "User with this email already exists."
+    },
+    "labels": {
+        "username": "Username",
+        "email": "Email",
+        "dateTime": "Date & Time",
+        "location": "Location",
+        "cityCountry": "City, Country"
+    },
+    "placeholders": {
+        "searchArtist": "Search for an artist...",
+        "enterUsername": "Enter username",
+        "enterEmail": "Enter email"
+    },
+    "footer": {
+        "text": "© {{year}} Who's In Town. Discover your favorite artists on tour."
+    },
+    "settings": {
+        "title": "Settings",
+        "persistFavourites": "Persist favorites",
+        "persistLanguage": "Persist Language",
+        "persistTheme": "Persist Theme",
+        "language": "Language",
+        "theme": "Theme",
+        "light": "Light",
+        "dark": "Dark",
+        "close": "Close",
+        "saveAndClose": "Save & Close"
+    },
+    "cookieBanner": {
+        "text": "This website uses cookies to ensure you get the best experience on our website.",
+        "accept": "I Accept"
+    }
+}

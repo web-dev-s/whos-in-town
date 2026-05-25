@@ -1,0 +1,90 @@
+/* Search Bar Row */
+.search-bar-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+  padding: 0; /* Reset any leaking global padding */
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding: 0 0.75rem;
+  height: 40px; /* Align height with the toggle button */
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--card-bg);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  max-width: none; /* Occupy full column width */
+}
+
+.search-bar:focus-within {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 0.9rem;
+  color: var(--card-text);
+  background-color: transparent;
+}
+
+.search-bar input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.search-bar-clear-btn {
+   background-color:transparent;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.search-bar-clear-btn:hover {
+  color: var(--text-primary);
+}
+
+.search-bar .search-submit-btn {
+  padding: 0 0.5rem;
+  height: 28px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.8rem;
+  transition: background-color 0.2s ease;
+}
+
+.search-bar .search-submit-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+.search-bar svg {
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+ .search-bar button [type="submit"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 0.3rem 1rem;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}

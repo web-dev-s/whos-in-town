@@ -1,0 +1,156 @@
+/* Drawer styling for Favorites when not in desktop view */
+.favorites-sidebar.drawer {
+  position: fixed;
+  right: 0;
+  top: 76px; /* Aligns under the header */
+  bottom: 0;
+  width: 320px;
+  z-index: 1000;
+  background: var(--card-bg);
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(100%);
+  grid-column: auto !important;
+  margin: 0 !important;
+  border-radius: 16px 0 0 16px;
+  border-right: none;
+  overflow: visible; /* Prevent the handle from being clipped by the .column class */
+}
+
+.favorites-sidebar.drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-handle {
+  display: none;
+}
+
+.favorites-sidebar.drawer .scrollable-content {
+  min-height: 0; /* Forces flex child to shrink and show scrollbar */
+}
+
+.drawer-backdrop {
+  position: fixed;
+  top: 104px; /* Align with drawer top boundary */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 999;
+}
+
+.favorites-sidebar.drawer .drawer-handle {
+  display: flex;
+  position: absolute;
+  left: -68px;
+  top: 0;
+  bottom: 78px;
+  width: 50px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-right: none;
+  border-radius: 12px 0 0 12px; /* Match drawer/column radius */
+  cursor: pointer;
+  color: var(--text-primary);
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.handle-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+}
+
+.handle-arrows {
+  font-weight: 900;
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+
+.handle-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #ef4444;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+}
+
+.empty-msg {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+
+/* Favorite card item styles */
+.fav-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  gap: 0.75rem;
+}
+
+.fav-card:hover {
+  transform: translateY(-2px);
+  background-color: var(--bg-tertiary);
+}
+
+.fav-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.fav-info strong {
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fav-info span {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.remove-fav {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.remove-fav:hover {
+  color: #ef4444;
+}
