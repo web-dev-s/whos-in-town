@@ -39,18 +39,20 @@ export const Header: React.FC<PropsWithChildren> = () => {
   // Sync theme and language with user-specific cookie
   useEffect(() => {
     if (!isAuthenticated || !user) {
-      if (isSettingsLoaded){(()=>{setIsSettingsLoaded(false);})() }
+      if (isSettingsLoaded) {
+        (() => { setIsSettingsLoaded(false); })();
+      }
       return;
     }
 
     // Initial load from cookie when user is first detected (login or refresh)
     if (!isSettingsLoaded) {
-      const settings = CookieService.getSettingsCookie(user.id);
+      const settings = CookieService.getSettingsCookie(user?.id);
       if (settings) {
         if (settings.lang) i18n.changeLanguage(settings.lang);
         if (settings.theme && theme !== settings.theme) toggleTheme();
       }
-      (()=>{ setIsSettingsLoaded(true);})()
+      (() => { setIsSettingsLoaded(true); })();
      
       return;
     }

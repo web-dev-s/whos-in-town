@@ -24,7 +24,7 @@ export const FavoritesProvider = function (
     }
 
     // Hydrate: Initial load from cookie if current state is empty
-    const settings = CookieService.getSettingsCookie(user.id);
+    const settings = CookieService.getSettingsCookie(user?.id);
     if (settings?.favorites && contextValue.current.favorites.getValue().length === 0) {
       contextValue.current.favorites.next(settings.favorites);
     }

@@ -16,11 +16,11 @@ export const SettingsModal: React.FC = () => {
   const [user] = useMediatorState(userContext.user);
 
   const [currentSelectedLanguage, setCurrentSelectedLanguage] = useState(() => {
-    const settings = user ? CookieService.getSettingsCookie(user.id) : null;
+    const settings = user?.id ? CookieService.getSettingsCookie(user.id) : null;
     return settings?.lang || i18n.language;
   });
   const [currentSelectedTheme, setCurrentSelectedTheme] = useState(() => {
-    const settings = user ? CookieService.getSettingsCookie(user.id) : null;
+    const settings = user?.id ? CookieService.getSettingsCookie(user.id) : null;
     return settings?.theme || theme;
   });
   const [persistFavourites, setPersistFavourites] = useState(
@@ -36,7 +36,7 @@ export const SettingsModal: React.FC = () => {
   useEffect(() => {
     if (isOpen) {
       async function setLanguageAndTheme() {
-        const settings = user ? CookieService.getSettingsCookie(user.id) : null;
+        const settings = user?.id ? CookieService.getSettingsCookie(user.id) : null;
         setCurrentSelectedLanguage(settings?.lang || i18n.language);
         setCurrentSelectedTheme(settings?.theme || theme);
       }
