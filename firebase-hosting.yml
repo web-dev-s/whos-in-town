@@ -19,7 +19,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm i && npm ci
+        run: npm ci
 
       - name: Build project
         run: npm run build
