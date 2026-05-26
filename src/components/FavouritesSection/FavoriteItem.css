@@ -1,0 +1,55 @@
+/* Favorite card item styles */
+.fav-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.fav-card:hover {
+  transform: translateY(-2px);
+  background-color: var(--bg-tertiary);
+}
+
+.fav-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.fav-info strong {
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fav-info span {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.remove-fav {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+
+.remove-fav:hover {
+  opacity: 0.7;
+}

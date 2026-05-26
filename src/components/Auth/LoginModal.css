@@ -1,0 +1,114 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(4px);
+}
+
+.login-modal {
+  background: var(--card-bg-modal);
+  padding: 2.5rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+}
+
+.login-modal h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--text-main);
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--accent-color, #007bff);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.error-msg {
+  color: #ff4d4d;
+  font-size: 0.85rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
+.toggle-mode {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--accent-color, #007bff);
+  cursor: pointer;
+  text-decoration: underline;
+  padding-left: 0.5rem;
+}
+
+.link-btn.highlight-register {
+  font-weight: bold;
+  color: var(--accent-color-dark, #0056b3); /* A slightly darker accent for emphasis */
+  text-decoration: none; /* Remove underline for a different highlight */
+}
+
+/* Ensure text is visible in light theme */
+html[data-theme="light"] .login-modal h2,
+html[data-theme="light"] .form-group label,
+html[data-theme="light"] .error-msg,
+html[data-theme="light"] .toggle-mode span {
+  color: #333333; /* Dark grey for light theme */
+}
+
+/* Ensure link button is visible in light theme */
+html[data-theme="light"] .link-btn {
+  color: var(--accent-color, #007bff); /* Use accent color, with a fallback */
+}
