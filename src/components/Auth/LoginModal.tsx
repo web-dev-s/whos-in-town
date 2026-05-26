@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { useMediatorState } from "../../hooks/useMediatorState";
-import { UserStorageService } from "../../api/userStorageService";
-import { CookieService } from "../../api/cookieService";
+import { UserStorageService } from "../../api-services/userPersistenceService";
+import { CookieService } from "../../api-services/cookieSessionService";
 import "./LoginModal.css";
 import { useTranslation } from "react-i18next";
 import { FavoritesContext } from "../../contexts/FavoritesContext";

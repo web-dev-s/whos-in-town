@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { BehaviorSubject } from "rxjs";
-import { CookieService } from "../api/cookieService";
+import { CookieService } from "../api-services/cookieSessionService";
 import type { UserSettings } from "../types";
 export interface User {
   id: number;

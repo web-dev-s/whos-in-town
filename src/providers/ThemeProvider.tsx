@@ -1,24 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<"light" | "dark">(() => {
     const persistTheme = localStorage.getItem("persist_theme") === "true";
-    let initialTheme: "light" | "dark" | null = null;
+    const storedTheme = !persistTheme ? (localStorage.getItem("theme") as "light" | "dark" | null) : null;
 
-    if (!persistTheme) {
-      // Fallback to non-persisted local storage if persistence is off
-      initialTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-    }
+    if (storedTheme) return storedTheme;
 
-    if (initialTheme) {
-      return initialTheme;
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      // Default to system preference if no persisted theme
-      return "dark";
-    }
-
-
-    return "light";
+    // Default to system preference or light
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   });
 
   useEffect(() => {
@@ -30,12 +21,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (localStorage.getItem("persist_theme") !== "true") {
       localStorage.setItem("theme", theme);
     }
-
   }, [theme]);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
