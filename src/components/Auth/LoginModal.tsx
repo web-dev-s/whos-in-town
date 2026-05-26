@@ -76,10 +76,7 @@ export const LoginModal: React.FC = () => {
         const userSettings = UserStorageService.getUserSettings<UserSettings>(
           foundUser.id.toString(),
         );
-          console.log(
-          "Loaded user settings in storage:",
-          userSettings,
-        );
+          
         userContext.user.next(foundUser);
         userContext.userSettings.next(userSettings);
         userContext.isAuthenticated.next(true);
@@ -92,10 +89,7 @@ export const LoginModal: React.FC = () => {
         if (userSettings?.theme && theme !== userSettings.theme) {
           toggleTheme();
         }
-        console.log(
-          "Loaded user settings from storage:",
-          userContext.userSettings.getValue(),
-        );
+        
 
         handleClose();
         setHighlightRegisterButton(false);

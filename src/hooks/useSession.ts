@@ -32,8 +32,7 @@ export const useSession = () => {
           : [],
       } as UserSettings;
 
-      console.log("Logout - Saving user settings:", settingsToSave);
-      UserStorageService.upsertUserSettings(user.id.toString(), settingsToSave);
+       UserStorageService.upsertUserSettings(user.id.toString(), settingsToSave);
     }
 
     CookieService.removeUserSession();
@@ -61,7 +60,7 @@ export const useSession = () => {
         console.warn("User session cookie expired. Logging out...");
         handleLogout();
       }
-    }, 50000); // Check every 50 seconds
+    }, 10000); // Check every 10 seconds for better responsiveness
 
     return () => clearInterval(checkSessionInterval);
   }, [isAuthenticated, handleLogout]);

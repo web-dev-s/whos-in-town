@@ -1,33 +1,35 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-export function useElementHeight<T extends HTMLDivElement = HTMLDivElement>(
+export function useElementHeight<T extends HTMLElement = HTMLDivElement>(
     cssVariableName: string,
     attachToParentWithId: string,
     fallbackValue?: string,
     strict?: boolean,
-): React.RefObject<T|null> {
+): React.RefObject<T | null> {
     const ref = useRef<T>(null);
-    const onResize = useCallback((): void => {
-        if (ref.current) {
-            let height = (ref.current as HTMLDivElement).clientHeight || 0;
-            if (!height && !strict) {
-                height = ((ref.current as HTMLDivElement).firstChild as HTMLDivElement).clientHeight || 0;
+
+    useEffect(() => {
+        const updateHeight = () => {
+            const target = ref.current;
+            if (!target) {
+                document.getElementById(attachToParentWithId)?.style.setProperty(cssVariableName, fallbackValue ?? `0px`);
+                return;
+            }
+
+            let height = target.clientHeight || 0;
+            if (!height && !strict && target.firstChild instanceof HTMLElement) {
+                height = target.firstChild.clientHeight || 0;
             }
 
             document.getElementById(attachToParentWithId)?.style.setProperty(cssVariableName, `${height}px`);
-        } else {
-            document.getElementById(attachToParentWithId)?.style.setProperty(cssVariableName, fallbackValue ?? `0px`);
-        }
-    }, []);
-
-    useEffect(() => {
-        window.removeEventListener('resize', onResize);
-        window.addEventListener('resize', onResize);
-        onResize();
-        return (): void => {
-            window.removeEventListener('resize', onResize);
         };
-    }, [onResize]);
+
+        const observer = new ResizeObserver(updateHeight);
+        if (ref.current) observer.observe(ref.current);
+        updateHeight(); // Initial set
+
+        return () => observer.disconnect();
+    }, [cssVariableName, attachToParentWithId, fallbackValue, strict]);
 
     return ref;
 }

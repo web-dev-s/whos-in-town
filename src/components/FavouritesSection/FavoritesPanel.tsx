@@ -54,13 +54,13 @@ export function FavoritesPanel({
 
   
   const toggleFavorite = (event: Event) => {
-    console.log("setFavourites", favorites);
+    
     const isFav = favorites.some((f) => f.id === event.id);
     const updatedFavourites: Event[] = isFav
       ? favorites.filter((f) => f.id !== event.id)
       : [...favorites, event];
     setFavourites(updatedFavourites);
-    console.log("favorites", favorites);
+    
   };
 
 
