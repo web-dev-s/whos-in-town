@@ -13,7 +13,7 @@ export interface IUserContext {
   isAuthenticated: BehaviorSubject<boolean>;
   isLoginModalOpen: BehaviorSubject<boolean>;
   isSettingsModalOpen: BehaviorSubject<boolean>;
-   userSettings: BehaviorSubject<UserSettings | null>;
+  userSettings: BehaviorSubject<UserSettings | null>;
 }
 
 const initialUser = CookieService.getUserSession();

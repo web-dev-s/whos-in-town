@@ -9,14 +9,12 @@ import { ThemeToggle } from "../../components/Settings/ThemeToggle/ThemeToggle";
 import { UserContext } from "../../contexts/UserContext";
 import { useMediatorState } from "../../hooks/useMediatorState";
 import { useTranslation } from "react-i18next";
-import { CookieService } from "../../api/cookieService";
 import { SettingsButton } from "../../components/Settings/SettingsButton";
 import { LanguageToggle } from "../../components/Settings/LanguageToggle";
-import { FavoritesContext } from "../../contexts/FavoritesContext";
 import { useTheme } from "../../contexts/ThemeContext";
 import "./Header.css";
-import type { UserSettings } from "../../types";
 import { useElementHeight } from "../../hooks/useElementHeight";
+import { useSession } from "../../hooks/useSession";
 
 export const Header: React.FC<PropsWithChildren> = () => {
   const userContext = useContext(UserContext);
@@ -26,27 +24,11 @@ export const Header: React.FC<PropsWithChildren> = () => {
   const [, setIsLoginModalOpen] = useMediatorState(
     userContext.isLoginModalOpen,
   );
-  const [user, setUser] = useMediatorState(userContext.user);
-  const [isAuthenticated, setIsAuthenticated] = useMediatorState(
-    userContext.isAuthenticated,
-  );
-  const favoritesContext = useContext(FavoritesContext);
-  const [, setFavorites] = useMediatorState(favoritesContext.favorites);
+
+  const { user, isAuthenticated, handleLogout } = useSession();
 
   const [isSettingsLoaded, setIsSettingsLoaded] = useState(false);
 
-  // Restore user session from cookie on mount to fix hydration on refresh
-  useEffect(() => {
-    (() => {
-      const sessionUser = CookieService.getUserSession();
-      if (sessionUser) {
-        setUser(sessionUser);
-        setIsAuthenticated(true);
-      }
-    })();
-  }, []);
-
-  // Sync theme and language with user-specific cookie
   useEffect(() => {
     if (!isAuthenticated || !user) {
       if (isSettingsLoaded) {
@@ -57,12 +39,12 @@ export const Header: React.FC<PropsWithChildren> = () => {
       return;
     }
 
-    // Initial load from cookie when user is first detected (login or refresh)
     if (!isSettingsLoaded) {
-      const settings = CookieService.getSettingsCookie(user?.id);
-      if (settings) {
-        if (settings.lang) i18n.changeLanguage(settings.lang);
-        if (settings.theme && theme !== settings.theme) toggleTheme();
+      const userSettings = userContext.userSettings.getValue();
+
+      if (userSettings) {
+        if (userSettings.lang) i18n.changeLanguage(userSettings.lang);
+        if (userSettings.theme && theme !== userSettings.theme) toggleTheme();
       }
       (() => {
         setIsSettingsLoaded(true);
@@ -70,33 +52,16 @@ export const Header: React.FC<PropsWithChildren> = () => {
 
       return;
     }
-  }, [isAuthenticated, user, isSettingsLoaded, i18n, toggleTheme, theme]);
+  }, [
+    isAuthenticated,
+    user,
+    userContext.userSettings,
+    isSettingsLoaded,
+    i18n,
+    toggleTheme,
+    theme,
+  ]);
 
-  const handleLogout = () => {
-    // Explicitly save favorites and settings before clearing the session
-    if (user) {
-      const currentSettings = CookieService.getSettingsCookie(user.id) || {};
-      const settingsToSave: UserSettings = {
-        ...currentSettings,
-        favorites:
-          localStorage.getItem("persist_favourites") === "true"
-            ? favoritesContext.favorites.getValue()
-            : [],
-        theme:
-          localStorage.getItem("persist_theme") === "true" ? theme : undefined,
-        lang:
-          localStorage.getItem("persist_language") === "true"
-            ? (i18n.language as "en" | "de")
-            : undefined,
-      };
-      CookieService.setSettingsCookie(user.id, settingsToSave);
-    }
-
-    CookieService.removeUserSession();
-    setUser(null);
-    setIsAuthenticated(false);
-    setFavorites([]); // Clear favorites from render on logout
-  };
   const refHeader = useElementHeight("--height-header", "app-layout");
   return (
     <div className="header-container">

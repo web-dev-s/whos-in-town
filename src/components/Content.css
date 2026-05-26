@@ -56,20 +56,24 @@
   padding-right: 10px;
 }
 
-.scrollable-content::-webkit-scrollbar {
+.scrollable-content::-webkit-scrollbar,
+.three-column-container::-webkit-scrollbar {
   width: 6px;
 }
 
-.scrollable-content::-webkit-scrollbar-track {
+.scrollable-content::-webkit-scrollbar-track,
+.three-column-container::-webkit-scrollbar-track {
   background: var(--bg-tertiary);
 }
 
-.scrollable-content::-webkit-scrollbar-thumb {
+.scrollable-content::-webkit-scrollbar-thumb,
+.three-column-container::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 3px;
 }
 
-.scrollable-content::-webkit-scrollbar-thumb:hover {
+.scrollable-content::-webkit-scrollbar-thumb:hover,
+.three-column-container::-webkit-scrollbar-thumb:hover {
   background: var(--text-secondary);
 }
 

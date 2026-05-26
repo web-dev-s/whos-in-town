@@ -17,12 +17,6 @@ export const LoginModal: React.FC = () => {
 
   const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useMediatorState(userContext.isLoginModalOpen);
-  const [, setUser] = useMediatorState(userContext.user);
-  const [userSettingsMediator, setUserSettings] = useMediatorState(
-    userContext.userSettings,
-  );
-  const [, setIsAuthenticated] = useMediatorState(userContext.isAuthenticated);
-  const [, setFavorites] = useMediatorState(favoritesContext.favorites);
 
   const [isRegister, setIsRegister] = useState(false);
   const [userName, setUserName] = useState("");
@@ -67,10 +61,10 @@ export const LoginModal: React.FC = () => {
 
       UserStorageService.saveUsers([...users, newUser]);
       CookieService.setUserSession(newUser);
-      setUser(newUser);
-      setIsAuthenticated(true);
+      userContext.user.next(newUser);
+      userContext.isAuthenticated.next(true);
 
-      setFavorites([]); // New user starts with empty favorites
+      favoritesContext.favorites.next([]); // New user starts with empty favorites
       handleClose();
     } else {
       const foundUser = users.find(
@@ -78,15 +72,19 @@ export const LoginModal: React.FC = () => {
       );
       if (foundUser) {
         CookieService.setUserSession(foundUser);
-        setUser(foundUser);
-        setIsAuthenticated(true);
 
-        const userSettings = UserStorageService.getUserSettings<UserSettings>(foundUser.id.toString());
-
-        setUserSettings(userSettings);
-
+        const userSettings = UserStorageService.getUserSettings<UserSettings>(
+          foundUser.id.toString(),
+        );
+          console.log(
+          "Loaded user settings in storage:",
+          userSettings,
+        );
+        userContext.user.next(foundUser);
+        userContext.userSettings.next(userSettings);
+        userContext.isAuthenticated.next(true);
         if (userSettings?.favorites) {
-          setFavorites(userSettings.favorites);
+          favoritesContext.favorites.next(userSettings.favorites);
         }
         if (userSettings?.lang) {
           i18n.changeLanguage(userSettings.lang);
@@ -94,6 +92,10 @@ export const LoginModal: React.FC = () => {
         if (userSettings?.theme && theme !== userSettings.theme) {
           toggleTheme();
         }
+        console.log(
+          "Loaded user settings from storage:",
+          userContext.userSettings.getValue(),
+        );
 
         handleClose();
         setHighlightRegisterButton(false);
@@ -103,8 +105,6 @@ export const LoginModal: React.FC = () => {
       }
     }
   };
-
-  console.log("Loaded user settings from cookie:", userSettingsMediator);
 
   return (
     <div className="modal-overlay" onClick={handleClose}>
