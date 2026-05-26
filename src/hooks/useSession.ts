@@ -2,8 +2,8 @@ import { useContext, useEffect, useCallback } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { FavoritesContext } from "../contexts/FavoritesContext";
 import { useMediatorState } from "./useMediatorState";
-import { CookieService } from "../api/cookieService";
-import { UserStorageService } from "../api/userStorageService";
+import { CookieService } from "../api-services/cookieSessionService";
+import { UserStorageService } from "../api-services/userPersistenceService";
 import type { UserSettings } from "../types";
 
 /**

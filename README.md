@@ -27,7 +27,7 @@ The interface is broken down into atomic components (e.g., `SearchBar`, `Favorit
 
 ### 3. Service Layer
 - **Persistence Strategy:** 
-    - **`CookieService`:** Primary layer for session-critical data. It utilizes **Base64 encoding** for both keys and values to provide data isolation per `user.id` and a basic layer of obfuscation. 
+    - **`CookieService`:** Used exclusively for active session management. It utilizes **Base64 encoding** for both keys and values to provide basic obfuscation and session isolation. 
     - **`UserStorageService`:** Acts as a mock backend using `localStorage`. It manages a persistent user database, handling registration, credential verification, and long-term storage of user profiles and settings.
 - **API Service Layer:** All external fetches (Bandsintown API) are encapsulated in dedicated service modules. This decouples the network logic from React components, making the data layer easily testable and swappable.
 
@@ -44,7 +44,7 @@ Full support for multi-language switching (English and German) with persistent l
 ### ⭐ Favorites System
 - Users can "star" events to save them.
 - **Logged-out users:** Favorites are transient and kept in local state.
-- **Logged-in users:** Favorites are automatically persisted to a user-specific Base64 cookie, surviving page refreshes and re-logins.
+- **Logged-in users:** Favorites are automatically persisted to the user's profile in the mock backend (`localStorage`), surviving page refreshes and re-logins.
 
 ### 🌗 Theming & Responsive Design
 - **Adaptive Layout:** A 3-column grid that intelligently refactors based on screen size.
@@ -64,7 +64,7 @@ Full support for multi-language switching (English and German) with persistent l
 
 1. **Clone the repository:**
    ```bash
-   git clone [your-repo-url]
+   git clone [https://github.com/web-dev-s/whos-in-town.git]
    cd whos-in-town
    ```
 

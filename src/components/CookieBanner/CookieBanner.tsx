@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { CookieService } from "../../api/cookieService";
+import { CookieService } from "../../api-services/cookieSessionService";
 import "./CookieBanner.css";
 
 export const CookieBanner: React.FC = () => {

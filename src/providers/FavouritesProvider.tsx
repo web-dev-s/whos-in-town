@@ -6,7 +6,7 @@ import {
   type IFavoritesContext,
 } from "../contexts/FavoritesContext";
 import { UserContext } from "../contexts/UserContext";
-import { UserStorageService } from "../api/userStorageService";
+import { UserStorageService } from "../api-services/userPersistenceService";
 import { UserSettings } from "../types";
 
 export const FavoritesProvider = function (

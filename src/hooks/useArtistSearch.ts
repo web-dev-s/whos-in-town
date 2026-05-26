@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getArtist, getArtistEvents } from '../api/restClient';
+import { getArtist, getArtistEvents } from '../api-services/restClient';
 import type { Artist, Event } from '../types';
 
 export const useArtistSearch = (searchTerm: string) => {
