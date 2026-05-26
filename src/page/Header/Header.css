@@ -8,16 +8,17 @@
 
 .header-container {
   width: 100%;
-  max-width: 1400px;
+  width: 100vw;
   margin: 0 auto;
 }
 
 .header-top-row {
-  max-height: 60px;
+  min-height: 60px;
   display: flex;
   flex-direction: row;
   justify-content: space-between; 
   align-items: center;
+  margin-right: 22px;
 }
 
 .header-spacer {
@@ -74,39 +75,58 @@
   word-break: break-all;
 }
 
+.header-button {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none; /* Default to no border */
+  background: none; /* Default to no background */
+  color: var(--text-primary); /* Default text color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; /* Default no padding, specific buttons can add it */
+}
+
 .logout-button {
-  background: none;
   border: 1px solid var(--border-color);
   color: var(--text-main);
   padding: 6px 12px;
   border-radius: 4px;
-  cursor: pointer;
   font-size: 0.8rem;
-  transition: background 0.2s;
 }
 
 .header-login-btn {
   background: var(--accent-color);
   color: var(--text-main);
-  border: none;
   padding: 6px 16px;
   border-radius: 20px;
-  cursor: pointer;
   font-size: 0.85rem;
   font-weight: 500;
+}
+
+.header-action-button {
+ 
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  border-radius: 4px; 
+  min-width: 40px; 
+  height: 40px; 
+  padding: 0 8px;
 }
 
 /* Ensure text and icons are visible in light theme */
 html[data-theme="light"] .user-name-text,
 html[data-theme="light"] .user-email-info,
-html[data-theme="light"] .logout-button,
-html[data-theme="light"] .lang-text,
-html[data-theme="light"] .icon {
+html[data-theme="light"] .logout-button, 
+html[data-theme="light"] .lang-text, /* This is not a button, but a span */
+html[data-theme="light"] .icon, /* This is not a button, but an icon */
+html[data-theme="light"] .header-action-button { /* Added header-action-button */
   color: #333333; /* Dark grey for light theme */
 }
 
-/* Ensure logout button border is visible in light theme */
-html[data-theme="light"] .logout-button {
+
+html[data-theme="light"] .logout-button,
+html[data-theme="light"] .header-action-button { /* Added header-action-button */
   border-color: #cccccc; /* Light grey border for light theme */
 }
 
@@ -115,12 +135,7 @@ html[data-theme="light"] .logout-button {
   cursor: pointer;
   transition: color 0.2s;
 }
-
-.icon-button {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
+ 
 
 .lang-text {
   margin-left: 6px;

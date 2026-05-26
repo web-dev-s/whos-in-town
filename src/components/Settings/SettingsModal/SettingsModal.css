@@ -49,3 +49,40 @@
   cursor: pointer;
   user-select: none;
 }
+
+.settings-action-button {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.settings-action-button[data-variant="light"] {
+  background-color: #ffffff;
+  color: #333333;
+  border-color: #cccccc;
+}
+
+.settings-action-button[data-variant="dark"] {
+  background-color: #2d2d2d;
+  color: #ffffff;
+  border-color: #444444;
+}
+
+.submit-btn[data-variant="primary"] {
+  background-color: var(--accent-color, #007bff);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  width: 100%;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.submit-btn[data-variant="primary"]:hover {
+  opacity: 0.9;
+}

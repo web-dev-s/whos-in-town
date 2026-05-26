@@ -33,7 +33,10 @@ export interface Event {
 }
 
 export interface UserSettings {
-  theme?: 'dark' | 'light';
-  lang?: 'en' | 'de';
+  theme?: "dark" | "light";
+  lang?: "en" | "de";
   favorites?: Event[];
+  persist_favourites: boolean;
+  persist_language: boolean;
+  persist_theme: boolean;
 }

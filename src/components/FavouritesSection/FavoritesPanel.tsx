@@ -7,8 +7,8 @@ import { useMediatorState } from "../../hooks/useMediatorState";
 import { Heart } from "lucide-react";
 import "./FavoritesPanel.css";
 
+
 interface FavoritesPanelProps {
-  favorites: Event[];
   onSearch: (term: string) => void;
   onSelect: (id: string) => void;
   isOpen: boolean;
@@ -16,7 +16,6 @@ interface FavoritesPanelProps {
 }
 
 export function FavoritesPanel({
-  favorites,
   onSearch,
   onSelect,
   isOpen,
@@ -24,6 +23,10 @@ export function FavoritesPanel({
 }: FavoritesPanelProps) {
   const { t } = useTranslation();
   const favouritesContext = useContext(FavoritesContext);
+  const [favorites, setFavourites] = useMediatorState(
+    favouritesContext.favorites,
+  );
+
   const [, setIsFavouritePanelOpen] = useMediatorState(
     favouritesContext.isFavouritePanelOpen,
   );
@@ -48,11 +51,22 @@ export function FavoritesPanel({
     return () => mediaQuery.removeEventListener("change", updateDesktop);
   }, [onClose]);
 
+
+  
+  const toggleFavorite = (event: Event) => {
+    console.log("setFavourites", favorites);
+    const isFav = favorites.some((f) => f.id === event.id);
+    const updatedFavourites: Event[] = isFav
+      ? favorites.filter((f) => f.id !== event.id)
+      : [...favorites, event];
+    setFavourites(updatedFavourites);
+    console.log("favorites", favorites);
+  };
+
+
+ 
   return (
     <>
-      {!isDesktop && isOpen && (
-        <div className="drawer-backdrop" onClick={onClose} />
-      )}
       <aside
         className={`favorites-sidebar column ${!isDesktop ? "drawer" : ""} ${isOpen ? "open" : ""}`}
       >
@@ -60,35 +74,60 @@ export function FavoritesPanel({
           <button
             className="drawer-handle"
             onClick={() => setIsFavouritePanelOpen(true)}
-            aria-label={isOpen ? "Close favorites" : "Open favorites"}
+            aria-label={
+              isOpen
+                ? t("ariaLabels.closeFavorites")
+                : t("ariaLabels.openFavorites")
+            }
           >
-            <Heart size={24} fill={favorites.length > 0 ? "#ef4444" : "none"} color={favorites.length > 0 ? "#ef4444" : "currentColor"} />
-            <span className="handle-text">{t("titles.favorites")}</span>
             <span className="handle-arrows">{"<<"}</span>
+            <span className="handle-text">{t("titles.favorites")}</span>{" "}
+            <Heart
+              size={24}
+              fill={favorites.length > 0 ? "#ef4444" : "none"}
+              color={favorites.length > 0 ? "#ef4444" : "currentColor"}
+            />
             {favorites.length > 0 && (
               <span className="handle-badge">{favorites.length}</span>
             )}
           </button>
         )}
 
-        <h2>{t("titles.favorites")}</h2>
+        <div
+          className="panel-header favorites-panel-header"
+          style={{ height: "var(--height-header)" }}
+        >
+          {!isDesktop && isOpen && (
+            <button
+              className="drawer-close-btn"
+              onClick={onClose}
+              aria-label="Close favorites"
+            >
+              <span className="handle-arrows">{">>"}</span>
+            </button>
+          )}
+          <h2>{t("titles.favorites")}</h2>
+        </div>
 
         {favorites.length === 0 ? (
           <p className="empty-msg">{t("messages.noFavourites")}</p>
-        ) : (isDesktop || isOpen) && (
-          <div className="scrollable-content">
-            {favorites.map((fav) => (
-              <FavoriteItem
-                key={fav.id}
-                event={fav}
-                onSearch={onSearch}
-                onSelect={(id) => {
-                  onSelect(id);
-                  if (!isDesktop) onClose();
-                }}
-              />
-            ))}
-          </div>
+        ) : (
+          (isDesktop || isOpen) && (
+            <div className="scrollable-content">
+              {favorites.map((fav) => (
+                <FavoriteItem
+                  key={fav.id}
+                  event={fav}
+                  onSearch={onSearch}
+                  onSelect={(id) => {
+                    onSelect(id);
+                    if (!isDesktop) onClose();
+                  }}
+                  toggleFavorite={toggleFavorite}
+                />
+              ))}
+            </div>
+          )
         )}
       </aside>
     </>

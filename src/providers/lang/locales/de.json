@@ -8,11 +8,12 @@
     "close": "Schließen",
     "logout": "Abmelden",
     "addToFavorites": "Zu Favoriten hinzufügen",
-    "removeFromFavorites": "Aus Favoriten entfernen"
+    "removeFromFavorites": "Aus Favoriten entfernen",
+    "getTickets": "Tickets sichern"
   },
   "titles": {
     "results": "Ergebnisse",
-    "selectedEvent": "Gewähltes Event",
+    "selectedEvent": "Veranstaltungsdetails",
     "favorites": "Favoriten",
     "venueInformation": "Veranstaltungsort Informationen",
     "description": "Beschreibung",
@@ -20,7 +21,7 @@
   },
   "messages": {
     "searching": "Suche...",
-    "errorFindingArtist": "Fehler bei der Künstlersuche",
+    "errorFindingArtist": "Kein Künstler gefunden. Bitte versuchen Sie einen anderen Namen.",
     "noFavourites": "Noch keine Favoriten vorhanden.",
     "selectEventPrompt": "Wählen Sie ein Event aus der Liste aus, um Details anzuzeigen.",
     "tapItem": "Tippen Sie auf ein Element, um es zu öffnen, oder schließen Sie es, um weiter zu stöbern.",
@@ -28,7 +29,8 @@
     "alreadyHaveAccount": "Sie haben bereits ein Konto?",
     "dontHaveAccount": "Sie haben noch kein Konto?",
     "fillFields": "Bitte füllen Sie alle Felder aus.",
-    "userExists": "Benutzer mit dieser E-Mail existiert bereits."
+    "userExists": "Benutzer mit dieser E-Mail existiert bereits.",
+    "noEventsRegistered": "Keine Veranstaltungen registriert"
   },
   "labels": {
     "username": "Benutzername",
@@ -36,6 +38,14 @@
     "dateTime": "Datum & Uhrzeit",
     "location": "Ort",
     "cityCountry": "Stadt, Land"
+  },
+  "ariaLabels": {
+    "closeFavorites": "Favoriten schließen",
+    "openFavorites": "Favoriten öffnen",
+    "switchLanguage": "Sprache wechseln",
+    "clearSearch": "Suche löschen",
+    "switchGerman": "Zu Deutsch wechseln",
+    "switchEnglish": "Auf Englisch umstellen"
   },
   "placeholders": {
     "searchArtist": "Suche nach einem Künstler...",

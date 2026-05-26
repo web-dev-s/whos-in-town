@@ -1,34 +1,23 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Star } from "lucide-react";
 import type { Event } from "../../types";
-import { useMediatorState } from "../../hooks/useMediatorState";
-import { FavoritesContext } from "../../contexts/FavoritesContext";
+ 
 import "./FavoriteItem.css";
+ 
 
 interface FavoriteItemProps {
   event: Event;
   onSearch: (term: string) => void;
   onSelect: (id: string) => void;
+  toggleFavorite: (event: Event) => void;
 }
 
 export const FavoriteItem: React.FC<FavoriteItemProps> = ({
   event,
   onSearch,
   onSelect,
+  toggleFavorite,
 }) => {
-  const favouritesContext = useContext(FavoritesContext);
-  const [favorites, setFavourites] = useMediatorState(
-    favouritesContext.favorites,
-  );
-  
-  const toggleFavorite = (event: Event) => {
-    const isFav = favorites.some((f) => f.id === event.id);
-    const updatedFavourites: Event[] = isFav
-      ? favorites.filter((f) => f.id !== event.id)
-      : [...favorites, event];
-    setFavourites(updatedFavourites);
-  };
-
   const handleInteraction = () => {
     const lineupSearch = event.lineup?.join(" ") || event.artist_id;
     onSearch(lineupSearch);

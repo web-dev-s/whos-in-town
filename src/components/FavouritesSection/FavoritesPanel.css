@@ -2,19 +2,26 @@
 .favorites-sidebar.drawer {
   position: fixed;
   right: 0;
-  top: 76px; /* Aligns under the header */
-  bottom: 0;
+  top: calc(16px + var(--height-header)); /* Start right below the header */
+  bottom: 0; /* End right above the footer */
+  height: auto !important;
   width: 320px;
   z-index: 1000;
   background: var(--card-bg);
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateX(100%);
   grid-column: auto !important;
   margin: 0 !important;
   border-radius: 16px 0 0 16px;
   border-right: none;
   overflow: visible; /* Prevent the handle from being clipped by the .column class */
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1), bottom 0.3s ease;
+}
+
+#app-layout[footervisible="true"] .favorites-sidebar.drawer {
+  bottom: var(--height-footer);
 }
 
 .favorites-sidebar.drawer.open {
@@ -26,30 +33,23 @@
 }
 
 .favorites-sidebar.drawer .scrollable-content {
-  min-height: 0; /* Forces flex child to shrink and show scrollbar */
-}
-
-.drawer-backdrop {
-  position: fixed;
-  top: 104px; /* Align with drawer top boundary */
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: transparent;
-  z-index: 999;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding-bottom: 24px; /* Breathing room at the bottom */
 }
 
 .favorites-sidebar.drawer .drawer-handle {
   display: flex;
   position: absolute;
-  left: -68px;
+  left: -50px; /* Default for <1024px */
   top: 0;
-  bottom: 78px;
+  bottom: 0; /* Stretch handle to the bottom of the drawer */
   width: 50px;
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-right: none;
-  border-radius: 12px 0 0 12px; /* Match drawer/column radius */
+  border-radius: 12px 0 0 12px;
   cursor: pointer;
   color: var(--text-primary);
   box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
@@ -82,6 +82,7 @@
   position: absolute;
   top: 8px;
   right: 8px;
+  left: 8px;
   background: #ef4444;
   color: white;
   font-size: 10px;
@@ -153,4 +154,25 @@
 
 .remove-fav:hover {
   color: #ef4444;
+}
+
+.favorites-panel-header {
+  border-radius: 16px 0 0 0;
+}
+
+.favorites-panel-header h2 {
+  border-bottom: none !important;
+  flex: 1;
+  margin: 0;
+}
+
+.drawer-close-btn {
+  background: none;
+  border: none;
+  padding: 0 1rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

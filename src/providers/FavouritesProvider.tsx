@@ -5,46 +5,65 @@ import {
   defaultFavoritesContexttValue,
   type IFavoritesContext,
 } from "../contexts/FavoritesContext";
-import { CookieService } from "../api/cookieService";
 import { UserContext } from "../contexts/UserContext";
-import { useMediatorState } from "../hooks/useMediatorState";
+import { UserStorageService } from "../api/userStorageService";
+import { UserSettings } from "../types";
 
 export const FavoritesProvider = function (
   props: PropsWithChildren,
 ): React.ReactElement {
   const contextValue = useRef<IFavoritesContext>(defaultFavoritesContexttValue);
   const userContext = useContext(UserContext);
-  const [user] = useMediatorState(userContext.user);
-  const [isAuthenticated] = useMediatorState(userContext.isAuthenticated);
 
   useEffect(() => {
-    if (!isAuthenticated || !user) {
+    const user = userContext.user.getValue();
+
+    if (!userContext.isAuthenticated.getValue() || !user) {
       contextValue.current.favorites.next([]);
       return;
     }
 
     // Hydrate: Initial load from cookie if current state is empty
-    const settings = CookieService.getSettingsCookie(user?.id);
-    if (settings?.favorites && contextValue.current.favorites.getValue().length === 0) {
-      contextValue.current.favorites.next(settings.favorites);
+    const latestSettings = UserStorageService.getUserSettings<UserSettings>(
+      user.id.toString(),
+    );
+
+    if (
+      latestSettings?.favorites &&
+      contextValue.current.favorites.getValue().length === 0
+    ) {
+      contextValue.current.favorites.next(latestSettings.favorites);
     }
 
-    const subscription = contextValue.current.favorites.subscribe((favorites) => {
-      const persistFavouritesFlag = localStorage.getItem("persist_favourites") === "true";
-      const latestSettings = CookieService.getSettingsCookie(user.id) || {};
+    const subscription = contextValue.current.favorites.subscribe(
+      (favorites) => {
+        const user = userContext.user.getValue();
+        if (!user) return;
 
-      // Improved Safeguard: Handle potential undefined values and empty arrays accurately
-      const currentFavoritesStr = JSON.stringify(favorites);
-      const savedFavoritesStr = JSON.stringify(latestSettings.favorites || []);
-      
-      if (currentFavoritesStr === savedFavoritesStr) return;
+        const latestSettings = UserStorageService.getUserSettings<UserSettings>(
+          user.id.toString(),
+        );
 
-      if (persistFavouritesFlag) {
-        CookieService.setSettingsCookie(user.id, { ...latestSettings, favorites });
-      }
-    });
+        if (
+          JSON.stringify(favorites) ===
+          JSON.stringify(latestSettings?.favorites)
+        )
+          return;
+        console.log("UserStorageService.upsertUserSettings",latestSettings?.persist_favourites &&
+          userContext.user.getValue()?.id);
+        if (
+          latestSettings?.persist_favourites &&
+          userContext.user.getValue()?.id
+        ) {
+          UserStorageService.upsertUserSettings(user.id.toString(), {
+            ...latestSettings,
+            favorites,
+          });
+        }
+      },
+    );
     return () => subscription.unsubscribe();
-  }, [user, isAuthenticated]);
+  }, [userContext.isAuthenticated, userContext.user]);
 
   return (
     // eslint-disable-next-line react-hooks/refs

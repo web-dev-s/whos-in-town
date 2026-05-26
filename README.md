@@ -22,11 +22,14 @@ The interface is broken down into atomic components (e.g., `SearchBar`, `Favorit
 ### 2. State & Data Management
 - **Context Providers:** Centralized logic for `User`, `Favorites`, and `Theme` using React Context.
 - **Mediator Pattern:** Implementation of a `useMediatorState` hook to synchronize complex state transitions between the UI and the Context providers.
-- **Server State:** TanStack Query handles caching, loading states, and a global retry policy (limited to 2 attempts for reliability).
+- **Server State:** TanStack Query (v5) manages asynchronous artist and event data. It implements a centralized retry policy and intelligent caching to minimize redundant API calls.
+- **Session Management Hook (`useSession`):** A custom hook that orchestrates authentication state. It handles session hydration on mount, clean logout procedures, and active lifecycle monitoring.
 
 ### 3. Service Layer
-- **`CookieService`:** Manages user sessions and user-specific settings. It utilizes Base64 encoding for cookie keys and values, ensuring data is isolated per `user.id`.
-- **`UserStorageService`:** A simulated backend persistence layer using `localStorage` to manage a mock user database for registration and login.
+- **Persistence Strategy:** 
+    - **`CookieService`:** Primary layer for session-critical data. It utilizes **Base64 encoding** for both keys and values to provide data isolation per `user.id` and a basic layer of obfuscation. 
+    - **`UserStorageService`:** Acts as a mock backend using `localStorage`. It manages a persistent user database, handling registration, credential verification, and long-term storage of user profiles and settings.
+- **API Service Layer:** All external fetches (Bandsintown API) are encapsulated in dedicated service modules. This decouples the network logic from React components, making the data layer easily testable and swappable.
 
 ### 4. Internationalization (i18n)
 Full support for multi-language switching (English and German) with persistent language preferences that sync to the user's profile.
@@ -50,7 +53,7 @@ Full support for multi-language switching (English and German) with persistent l
 
 ### 🔐 Auth Simulation
 - Full registration and login flow.
-- Session management via cookies.
+- **Session Watchdog:** The application includes a background monitoring process that observes cookie expiration in real-time. If a session expires while the app is open, the user is automatically and gracefully logged out to maintain state integrity.
 - Dynamic Header that adapts based on authentication status.
 
 ### 🍪 UX & Compliance

@@ -1,12 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useCallback } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import { useMediatorState } from "../../../hooks/useMediatorState";
 import { useTranslation } from "react-i18next";
+import { UserSettings } from "../../../types";
 import { useTheme } from "../../../contexts/ThemeContext";
-import { CookieService } from "../../../api/cookieService";
-import "../../../App.css";
 import "./SettingsModal.css";
-import type { UserSettings } from "../../../types";
 
 export const SettingsModal: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -14,66 +12,30 @@ export const SettingsModal: React.FC = () => {
   const userContext = useContext(UserContext);
   const [isOpen, setIsOpen] = useMediatorState(userContext.isSettingsModalOpen);
   const [user] = useMediatorState(userContext.user);
-
-  const [currentSelectedLanguage, setCurrentSelectedLanguage] = useState(() => {
-    const settings = user?.id ? CookieService.getSettingsCookie(user.id) : null;
-    return settings?.lang || i18n.language;
-  });
-  const [currentSelectedTheme, setCurrentSelectedTheme] = useState(() => {
-    const settings = user?.id ? CookieService.getSettingsCookie(user.id) : null;
-    return settings?.theme || theme;
-  });
-  const [persistFavourites, setPersistFavourites] = useState(
-    () => localStorage.getItem("persist_favourites") === "true",
-  );
-  const [persistLanguage, setPersistLanguage] = useState(
-    () => localStorage.getItem("persist_language") === "true",
-  );
-  const [persistTheme, setPersistTheme] = useState(
-    () => localStorage.getItem("persist_theme") === "true",
+  const [userSettings, setUserSettings] = useMediatorState(
+    userContext.userSettings,
   );
 
-  useEffect(() => {
-    if (isOpen) {
-      async function setLanguageAndTheme() {
-        const settings = user?.id ? CookieService.getSettingsCookie(user.id) : null;
-        setCurrentSelectedLanguage(settings?.lang || i18n.language);
-        setCurrentSelectedTheme(settings?.theme || theme);
-      }
-      void (async () => await setLanguageAndTheme());
-    }
-  }, [isOpen, i18n.language, theme, user]);
-
-  if (!isOpen) return null;
-
-  const handleSaveAndClose = () => {
-    i18n.changeLanguage(currentSelectedLanguage);
-    if (theme !== currentSelectedTheme) toggleTheme();
-
-    localStorage.setItem("persist_favourites", String(persistFavourites));
-    localStorage.setItem("persist_language", String(persistLanguage));
-    localStorage.setItem("persist_theme", String(persistTheme));
+  const handleSaveAndClose = useCallback(() => {
+    i18n.changeLanguage(userSettings?.lang);
+    if (theme !== userSettings?.theme) toggleTheme();
 
     if (!user) {
       setIsOpen(false);
       return;
     }
 
-    const currentSettings: UserSettings =
-      CookieService.getSettingsCookie(user.id) || {};
-    currentSettings.lang = persistLanguage
-      ? (currentSelectedLanguage as "en" | "de")
-      : undefined;
-    currentSettings.theme = persistTheme
-      ? (currentSelectedTheme as "dark" | "light")
-      : undefined;
-
-    if (!persistFavourites) delete currentSettings.favorites;
-
-    CookieService.setSettingsCookie(user.id, currentSettings);
     setIsOpen(false);
-  };
-
+  }, [
+    i18n,
+    setIsOpen,
+    theme,
+    toggleTheme,
+    user,
+    userSettings?.lang,
+    userSettings?.theme,
+  ]);
+  if (!isOpen) return null;
   const handleCloseModal = () => setIsOpen(false);
 
   return (
@@ -88,8 +50,13 @@ export const SettingsModal: React.FC = () => {
           <label className="toggle-label">
             <input
               type="checkbox"
-              checked={persistFavourites}
-              onChange={(e) => setPersistFavourites(e.target.checked)}
+              checked={userSettings?.persist_favourites || false}
+              onChange={(e) =>
+                setUserSettings({
+                  ...userSettings,
+                  persist_favourites: Boolean(e.target.checked),
+                } as UserSettings)
+              }
             />
             <span>{t("settings.persistFavourites")}</span>
           </label>
@@ -99,8 +66,17 @@ export const SettingsModal: React.FC = () => {
           <div className="setting-row">
             <span>{t("settings.language")}</span>
             <select
-              value={currentSelectedLanguage}
-              onChange={(e) => setCurrentSelectedLanguage(e.target.value)}
+              value={userSettings?.lang}
+              onChange={(e) => {
+                setUserSettings({
+                  ...userSettings,
+                  lang: e.target.value,
+                } as UserSettings);
+                console.log("changed lang", {
+                  ...userSettings,
+                  lang: e.target.value,
+                });
+              }}
             >
               <option value="en">English</option>
               <option value="de">Deutsch</option>
@@ -109,8 +85,13 @@ export const SettingsModal: React.FC = () => {
           <label className="checkbox-label">
             <input
               type="checkbox"
-              checked={persistLanguage}
-              onChange={(e) => setPersistLanguage(e.target.checked)}
+              checked={userSettings?.persist_language || false}
+              onChange={(e) =>
+                setUserSettings({
+                  ...userSettings,
+                  persist_language: Boolean(e.target.checked),
+                } as UserSettings)
+              }
             />
             <span>{t("settings.persistLanguage")}</span>
           </label>
@@ -121,14 +102,16 @@ export const SettingsModal: React.FC = () => {
             <span>{t("settings.theme")}</span>
             <button
               className="settings-action-button"
-              onClick={() =>
-                setCurrentSelectedTheme(
-                  currentSelectedTheme === "light" ? "dark" : "light",
-                )
-              }
+              data-variant={userSettings?.theme || "light"}
+              onClick={() => {
+                setUserSettings({
+                  ...userSettings,
+                  theme: userSettings?.theme === "light" ? "dark" : "light",
+                } as UserSettings);
+              }}
               style={{ margin: 0, width: "auto" }}
             >
-              {currentSelectedTheme === "light"
+              {userSettings?.theme === "light"
                 ? t("settings.light")
                 : t("settings.dark")}
             </button>
@@ -136,15 +119,24 @@ export const SettingsModal: React.FC = () => {
           <label className="checkbox-label">
             <input
               type="checkbox"
-              checked={persistTheme}
-              onChange={(e) => setPersistTheme(e.target.checked)}
+              checked={userSettings?.persist_theme || false}
+              onChange={(e) =>
+                setUserSettings({
+                  ...userSettings,
+                  persist_theme: Boolean(e.target.checked),
+                } as UserSettings)
+              }
             />
             <span>{t("settings.persistTheme")}</span>
           </label>
         </div>
 
         <div style={{ marginTop: "2rem" }}>
-          <button className="submit-btn" onClick={handleSaveAndClose}>
+          <button
+            className="submit-btn"
+            data-variant="primary"
+            onClick={handleSaveAndClose}
+          >
             {t("settings.saveAndClose")}
           </button>
         </div>
