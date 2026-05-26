@@ -7,11 +7,12 @@ html[data-theme="dark"] {
 }
 
 .app-layout {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 .header-actions .icon {
@@ -36,8 +37,7 @@ html[data-theme="dark"] {
   padding: 0.5rem 1rem;
   position: sticky;
   top: 0;
-  z-index: 100;
-  height: var(--height-header); /* Ensure header takes its dynamic height */
+  z-index: 100; 
   transition: box-shadow 0.3s ease;
 }
 
@@ -57,7 +57,7 @@ html[data-theme="light"] .layout-header {
   flex-direction: column;
   height: auto;
   min-height: calc(100vh - var(--height-header));
-  padding-bottom: var(--height-footer); /* Safety margin for absolute footer */
+  padding-bottom: var(--height-footer);
 }
  
 .footer-content {
@@ -96,8 +96,27 @@ html[data-theme="light"] .layout-header {
   .header-top-row {
     padding: 0.5rem;
   }
-  .header-spacer,
-  .header-actions {
+  .header-spacer {
     display: none;
+  }
+}
+@media (max-width: 400px) {
+  .layout-main {
+    padding: 1rem;
+    margin-right: 40px;
+    overflow-y: visible; /* Allow body to scroll */
+    height: auto; /* Allow content to push footer down */
+  }
+
+  .header-top-row {
+   flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+  }
+  .header-spacer {
+    display: none;
+  }
+  .header-actions {
+    align-self:flex-end;
   }
 }

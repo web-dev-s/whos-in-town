@@ -32,6 +32,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           <Search size={20} />
         )}
         <input
+        id="search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder={t("placeholders.searchArtist")}

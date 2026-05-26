@@ -4,6 +4,8 @@ import { BehaviorSubject, skip } from "rxjs";
 export function useMediatorState<T>(
   mediator: BehaviorSubject<T>,
 ): [T, (state: T) => void, T] {
+ 
+ 
   const [currentValue, setCurrentValue] = useState<T>(mediator.getValue());
   const currentContextValue = useMemo(() => {
     return currentValue || mediator.getValue();

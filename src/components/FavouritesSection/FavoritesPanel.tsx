@@ -7,8 +7,8 @@ import { useMediatorState } from "../../hooks/useMediatorState";
 import { Heart } from "lucide-react";
 import "./FavoritesPanel.css";
 
+
 interface FavoritesPanelProps {
-  favorites: Event[];
   onSearch: (term: string) => void;
   onSelect: (id: string) => void;
   isOpen: boolean;
@@ -16,7 +16,6 @@ interface FavoritesPanelProps {
 }
 
 export function FavoritesPanel({
-  favorites,
   onSearch,
   onSelect,
   isOpen,
@@ -24,6 +23,10 @@ export function FavoritesPanel({
 }: FavoritesPanelProps) {
   const { t } = useTranslation();
   const favouritesContext = useContext(FavoritesContext);
+  const [favorites, setFavourites] = useMediatorState(
+    favouritesContext.favorites,
+  );
+
   const [, setIsFavouritePanelOpen] = useMediatorState(
     favouritesContext.isFavouritePanelOpen,
   );
@@ -48,6 +51,20 @@ export function FavoritesPanel({
     return () => mediaQuery.removeEventListener("change", updateDesktop);
   }, [onClose]);
 
+
+  
+  const toggleFavorite = (event: Event) => {
+    console.log("setFavourites", favorites);
+    const isFav = favorites.some((f) => f.id === event.id);
+    const updatedFavourites: Event[] = isFav
+      ? favorites.filter((f) => f.id !== event.id)
+      : [...favorites, event];
+    setFavourites(updatedFavourites);
+    console.log("favorites", favorites);
+  };
+
+
+ 
   return (
     <>
       <aside
@@ -76,7 +93,10 @@ export function FavoritesPanel({
           </button>
         )}
 
-        <div className="panel-header favorites-panel-header" style={{ height: 'var(--height-header)' }}>
+        <div
+          className="panel-header favorites-panel-header"
+          style={{ height: "var(--height-header)" }}
+        >
           {!isDesktop && isOpen && (
             <button
               className="drawer-close-btn"
@@ -103,6 +123,7 @@ export function FavoritesPanel({
                     onSelect(id);
                     if (!isDesktop) onClose();
                   }}
+                  toggleFavorite={toggleFavorite}
                 />
               ))}
             </div>

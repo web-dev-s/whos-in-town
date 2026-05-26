@@ -53,6 +53,7 @@
   overflow-y: auto;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  padding-right: 10px;
 }
 
 .scrollable-content::-webkit-scrollbar {
@@ -265,6 +266,8 @@
     height: auto;
     gap: 2.5rem;
     align-items: center;
+    overflow-y: auto;
+    margin-bottom: calc(22px + var(--height-footer));
   }
 
   .left-panel {

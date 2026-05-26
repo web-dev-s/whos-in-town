@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { FavoritesContext } from "../../contexts/FavoritesContext";
 import i18n from "../../providers/lang/i18n";
 import { useTheme } from "../../contexts/ThemeContext";
+import { UserSettings } from "../../types";
 
 export const LoginModal: React.FC = () => {
   const { t } = useTranslation();
@@ -17,6 +18,9 @@ export const LoginModal: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useMediatorState(userContext.isLoginModalOpen);
   const [, setUser] = useMediatorState(userContext.user);
+  const [userSettingsMediator, setUserSettings] = useMediatorState(
+    userContext.userSettings,
+  );
   const [, setIsAuthenticated] = useMediatorState(userContext.isAuthenticated);
   const [, setFavorites] = useMediatorState(favoritesContext.favorites);
 
@@ -56,7 +60,7 @@ export const LoginModal: React.FC = () => {
       setHighlightRegisterButton(false);
 
       const newUser = {
-        id: Date.now(),
+        id: users.length + 1 || 1,
         name: userName,
         email: email,
       };
@@ -77,8 +81,10 @@ export const LoginModal: React.FC = () => {
         setUser(foundUser);
         setIsAuthenticated(true);
 
-        const userSettings = CookieService.getSettingsCookie(foundUser.id);
-        console.log("Loaded user settings from cookie:", userSettings);
+        const userSettings = UserStorageService.getUserSettings<UserSettings>(foundUser.id.toString());
+
+        setUserSettings(userSettings);
+
         if (userSettings?.favorites) {
           setFavorites(userSettings.favorites);
         }
@@ -97,6 +103,8 @@ export const LoginModal: React.FC = () => {
       }
     }
   };
+
+  console.log("Loaded user settings from cookie:", userSettingsMediator);
 
   return (
     <div className="modal-overlay" onClick={handleClose}>

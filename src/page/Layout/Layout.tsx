@@ -5,23 +5,23 @@ import { LoginModal } from "../../components/Auth/LoginModal";
 import { SettingsModal } from "../../components/Settings/SettingsModal/SettingsModal";
 import { CookieBanner } from "../../components/CookieBanner/CookieBanner";
 import "./Layout.css";
- 
+import { useAutoSyncStorage } from "../../hooks/useAutoSyncStorage";
+
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
- 
+  useAutoSyncStorage();
+
   return (
     <div className="app-layout" id="app-layout">
       <header className="layout-header">
         <Header />
       </header>
-      <main className="layout-main">
-        {children}
-      </main>
+      <main className="layout-main">{children}</main>
       <Footer />
-    
+
       <LoginModal />
       <SettingsModal />
       <CookieBanner />

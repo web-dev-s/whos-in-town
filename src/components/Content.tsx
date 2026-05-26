@@ -105,7 +105,6 @@ export function Content() {
         </section>
 
         <FavoritesPanel
-          favorites={favorites}
           onSearch={setSearchTerm}
           onSelect={(id) => {
             setSelectedEventId(id);
