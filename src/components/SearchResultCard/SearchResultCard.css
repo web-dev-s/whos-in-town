@@ -6,6 +6,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: var(--shadow-sm);
+  margin: 0.5rem 0;
 }
 
 .search-result-card:hover {

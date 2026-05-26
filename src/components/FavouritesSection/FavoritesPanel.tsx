@@ -50,9 +50,6 @@ export function FavoritesPanel({
 
   return (
     <>
-      {!isDesktop && isOpen && (
-        <div className="drawer-backdrop" onClick={onClose} />
-      )}
       <aside
         className={`favorites-sidebar column ${!isDesktop ? "drawer" : ""} ${isOpen ? "open" : ""}`}
       >
@@ -60,35 +57,56 @@ export function FavoritesPanel({
           <button
             className="drawer-handle"
             onClick={() => setIsFavouritePanelOpen(true)}
-            aria-label={isOpen ? "Close favorites" : "Open favorites"}
+            aria-label={
+              isOpen
+                ? t("ariaLabels.closeFavorites")
+                : t("ariaLabels.openFavorites")
+            }
           >
-            <Heart size={24} fill={favorites.length > 0 ? "#ef4444" : "none"} color={favorites.length > 0 ? "#ef4444" : "currentColor"} />
-            <span className="handle-text">{t("titles.favorites")}</span>
             <span className="handle-arrows">{"<<"}</span>
+            <span className="handle-text">{t("titles.favorites")}</span>{" "}
+            <Heart
+              size={24}
+              fill={favorites.length > 0 ? "#ef4444" : "none"}
+              color={favorites.length > 0 ? "#ef4444" : "currentColor"}
+            />
             {favorites.length > 0 && (
               <span className="handle-badge">{favorites.length}</span>
             )}
           </button>
         )}
 
-        <h2>{t("titles.favorites")}</h2>
+        <div className="panel-header favorites-panel-header" style={{ height: 'var(--height-header)' }}>
+          {!isDesktop && isOpen && (
+            <button
+              className="drawer-close-btn"
+              onClick={onClose}
+              aria-label="Close favorites"
+            >
+              <span className="handle-arrows">{">>"}</span>
+            </button>
+          )}
+          <h2>{t("titles.favorites")}</h2>
+        </div>
 
         {favorites.length === 0 ? (
           <p className="empty-msg">{t("messages.noFavourites")}</p>
-        ) : (isDesktop || isOpen) && (
-          <div className="scrollable-content">
-            {favorites.map((fav) => (
-              <FavoriteItem
-                key={fav.id}
-                event={fav}
-                onSearch={onSearch}
-                onSelect={(id) => {
-                  onSelect(id);
-                  if (!isDesktop) onClose();
-                }}
-              />
-            ))}
-          </div>
+        ) : (
+          (isDesktop || isOpen) && (
+            <div className="scrollable-content">
+              {favorites.map((fav) => (
+                <FavoriteItem
+                  key={fav.id}
+                  event={fav}
+                  onSearch={onSearch}
+                  onSelect={(id) => {
+                    onSelect(id);
+                    if (!isDesktop) onClose();
+                  }}
+                />
+              ))}
+            </div>
+          )
         )}
       </aside>
     </>

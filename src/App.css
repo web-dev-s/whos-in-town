@@ -1,66 +1,15 @@
-html[data-theme="light"] {
-  --card-bg-modal: #ffffff; /* Solid white for light theme */
+:root {
+  /* Breakpoints for reference */
+  --media-lg: 1024px;
+  --media-md: 800px;
+  --media-sm: 400px;
 }
 
-html[data-theme="dark"] {
-  --card-bg-modal: #1a202c; /* Solid dark grey for dark theme */
-}
-
-.app-layout {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.header-actions .icon {
-  cursor: pointer;
-  color: #888;
-}
-
-.header-top-row {
-  min-height: 40px; /* Reduced height for the top row */
-  display: flex;
-  align-items: center;
-}
-
-.header-title {
-  flex: 1;
-  text-align: center;
-}
- 
-
-.layout-header {
-  background: var(--card-bg);
-  border-bottom: 1px solid var(--border);
-  padding: 0.5rem 1rem; /* Reduced vertical padding */
-  position: sticky; /* Keep header at the top */
-  top: 0; /* Align to the top */
-  z-index: 100; /* Ensure it stays above other content */
-}
-.layout-main {
-  flex: 1;
-  padding: 1.5rem; /* Padding around the main content area */
-  width: 100%;
-  box-sizing: border-box;
-  background-color: var(--background);
-  overflow-y: auto; /* Enable vertical scrolling for content only */
-}
-
-.footer-content {
-  background: var(--card-bg);
-  border-top: 1px solid var(--border);
-  padding: 1rem;
-  text-align: center;
-  color: #718096;
-  margin-top: 2rem; /* Add spacing between content and footer */
-  border-radius: 0 0 12px 12px; /* Optional: round bottom corners to match main container if needed */
-}
 /* Three-column Layout */
 .content-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100%; /* Take full height of layout-main */
+  height: 100%;
 }
 
 .three-column-container {
@@ -71,81 +20,48 @@ html[data-theme="dark"] {
   max-width: 1400px;
   margin: 0 auto;
   align-items: start;
-  height: calc(100% - 4rem); /* Adjust for search bar row height and its margin/padding */
-  /* The 4rem is an approximation. You might need to adjust this based on the actual height of your search bar row. */
+  height: 100%; /* Occupy full available space now that SearchBar is internal */
 }
 
-.column {
-  min-width: 250px; /* Minimum width for columns */
-  height: 100%; /* Take full height of the grid row */
-  display: flex;
-  flex-direction: column;
-  background: var(--card-bg);
-  border-radius: 12px;
-  border: 1px solid var(--border);
-}
 
-.scrollable-content {
-  flex: 1; /* Allows content to grow and shrink */
-  overflow-y: auto; /* Enable scrolling for individual columns if their content overflows */
-  padding-right: 5px; /* Prevent scrollbar from overlapping content */
-}
 
 /* Specific column styling for scrolling if needed */
 .left-panel, .selected-panel, .favorites-sidebar {
   /* These styles are already applied by .column, but can be overridden if needed */
 }
 
-/* Responsiveness */
+/* --- Layout Behavior for Breakpoints --- */
 
-/* Tablets and small laptops: Stack the favorites sidebar below the main content */
+/* Large Tablet / Small Laptop (1024px) */
 @media (max-width: 1024px) {
   .three-column-container {
-    /* Results and Selection on top, then Favorites below */
-    grid-template-columns: minmax(322px, 1fr) 350px;
-  }
-  .layout-main {
-    margin-right: 50px; /* Space for the Favorites drawer handle */
+    grid-template-columns: 1fr 1fr;
+    max-width: none;
+    gap: 1.5rem;
+    height: auto; /* Allow content to define height */
   }
 }
 
-/* Mobile: Stack everything in one column */
-@media (max-width: 768px) {
+/* Medium Tablet & Mobile Stack (800px) */
+@media (max-width: 800px) {
+  .content-wrapper {
+    height: auto;
+    min-height: 0;
+    overflow: visible; /* Allow content to push footer */
+  }
   .three-column-container {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto; /* All columns stack */
-    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    height: auto;
+    align-items: center;
+    overflow: visible;
   }
   .column {
-    height: auto; /* Allow content to define height */
+    height: auto;
+    min-height: auto;
     max-height: none; /* Remove max-height constraint for mobile */
     min-width: 0; /* Allow columns to shrink on very small screens */
+    width: 70vw;
   }
-  .header-top-row {
-    grid-template-columns: 1fr; /* Center title, hide actions */
-  }
-  .header-spacer, .header-actions {
-    display: none; /* Hide spacer and actions on mobile for simplicity */
-  }
-}
-
-.settings-action-button {
-  background-color: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  min-width: 40px;
-  height: 40px;
-  padding: 0 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: var(--text-primary);
-}
-
-.settings-action-button:hover {
-  background-color: var(--border-color);
-  border-color: var(--primary-color);
-  box-shadow: var(--shadow-sm);
 }

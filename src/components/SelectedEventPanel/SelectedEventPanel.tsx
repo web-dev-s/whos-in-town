@@ -38,13 +38,13 @@ export const SelectedEventPanel: React.FC<SelectedEventPanelProps> = ({
   return (
     <div className="scrollable-content">
       {event ? (
-        <div className="event-details">
+        <div className="event-details"> {/* This div is for the content, not the header */}
           <div className="event-details-header">
             <h3 title={event.venue.name}>{event.venue.name}</h3>
             <button
               className={`fav-btn ${isFavorite ? "active" : ""}`}
               onClick={toggleFavorite}
-              aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+              aria-label={isFavorite ? t("buttons.removeFromFavorites") : t("buttons.addToFavorites")}
             >
               <Heart fill={isFavorite ? "currentColor" : "none"} size={24} />
             </button>
@@ -104,7 +104,7 @@ export const SelectedEventPanel: React.FC<SelectedEventPanelProps> = ({
                       rel="noopener noreferrer"
                       className="offer-link"
                     >
-                      <span>{offer.type || "Get Tickets"}</span>
+                      <span>{offer.type || t("buttons.getTickets")}</span>
                       <ExternalLink size={14} />
                     </a>
                   ))}

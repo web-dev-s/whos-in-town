@@ -11,6 +11,7 @@ import { FavoritesContext } from "../../contexts/FavoritesContext";
 import { useTheme } from "../../contexts/ThemeContext";
 import "./Header.css";
 import type { UserSettings } from "../../types";
+import { useElementHeight } from "../../hooks/useElementHeight";
 
 export const Header: React.FC<PropsWithChildren> = () => {
   const userContext = useContext(UserContext);
@@ -82,10 +83,10 @@ export const Header: React.FC<PropsWithChildren> = () => {
     setIsAuthenticated(false);
     setFavorites([]); // Clear favorites from render on logout
   };
-
+  const refHeader = useElementHeight('--height-header', "app-layout");
   return (
-    <div className="header-container">
-      <div className="header-top-row">
+    <div className="header-container" ref={refHeader}>
+      <div className="header-top-row" style={{ height: 'var(--height-header)' }}>
         <div className="header-title">
           <h2 title="Who's In Town">Who's In Town</h2>
         </div>
@@ -101,7 +102,7 @@ export const Header: React.FC<PropsWithChildren> = () => {
                 <span className="user-name-text">{user?.name}</span>
               </div>
               <div className="user-profile-dropdown">
-                <button className="logout-button" onClick={handleLogout} title={user?.email}>
+                <button  className="header-button header-action-button language-toggle" onClick={handleLogout} title={user?.email}>
                   {t('buttons.logout')}
                 </button>
               </div>

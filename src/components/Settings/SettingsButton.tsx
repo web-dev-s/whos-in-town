@@ -9,8 +9,8 @@ export const SettingsButton: React.FC = () => {
 
   return (
     <button
-      className="settings-action-button"
-      onClick={() => setIsOpen(true)} 
+      className="header-button header-action-button language-toggle"
+      onClick={() => setIsOpen(true)}
       title="Settings"
       aria-label="Open settings"
     >

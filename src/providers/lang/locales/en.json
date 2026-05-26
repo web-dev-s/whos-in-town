@@ -8,11 +8,12 @@
         "close": "Close",
         "logout": "Logout",
         "addToFavorites": "Add to Favorites",
-        "removeFromFavorites": "Remove from Favorites"
+        "removeFromFavorites": "Remove from Favorites",
+        "getTickets": "Get Tickets"
     },
     "titles": {
         "results": "Results",
-        "selectedEvent": "Selected Event",
+        "selectedEvent": "Event Details",
         "favorites": "Favorites",
         "venueInformation": "Venue Information",
         "description": "Description",
@@ -20,7 +21,7 @@
     },
     "messages": {
         "searching": "Searching...",
-        "errorFindingArtist": "Error finding artist",
+        "errorFindingArtist": "No artist found. Please try a different name.",
         "noFavourites": "No favorite events yet.",
         "selectEventPrompt": "Select an event from the list to view more details.",
         "tapItem": "Tap an item to open it, or close to continue browsing.",
@@ -28,7 +29,8 @@
         "alreadyHaveAccount": "Already have an account?",
         "dontHaveAccount": "Don't have an account?",
         "fillFields": "Please fill in all fields.",
-        "userExists": "User with this email already exists."
+        "userExists": "User with this email already exists.",
+        "noEventsRegistered": "No events registered"
     },
     "labels": {
         "username": "Username",
@@ -36,6 +38,14 @@
         "dateTime": "Date & Time",
         "location": "Location",
         "cityCountry": "City, Country"
+    },
+    "ariaLabels": {
+        "closeFavorites": "Close favorites",
+        "openFavorites": "Open favorites",
+        "switchLanguage": "Switch language",
+        "clearSearch": "Clear search input",
+        "switchGerman": "Switch to German",
+        "switchEnglish": "Switch to English"
     },
     "placeholders": {
         "searchArtist": "Search for an artist...",

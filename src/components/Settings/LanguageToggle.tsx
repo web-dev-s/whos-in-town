@@ -3,7 +3,7 @@ import { Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 export const LanguageToggle: React.FC = () => {
-  const { i18n } = useTranslation();
+  const {t, i18n } = useTranslation();
 
   const toggleLanguage = () => {
     const newLang = i18n.language === "en" ? "de" : "en";
@@ -12,10 +12,11 @@ export const LanguageToggle: React.FC = () => {
 
   return (
     <button
-      className="settings-action-button language-toggle"
+      
+         className="header-button header-action-button language-toggle"
       onClick={toggleLanguage}
-      title={i18n.language === "en" ? "Switch to German" : "Auf Englisch umstellen"}
-      aria-label="Switch language"
+      title={i18n.language === "en" ? t("ariaLabels.switchGerman") : t("ariaLabels.switchEnglish")}
+      aria-label={t("ariaLabels.switchLanguage")}
     >
       <Globe size={20} className="icon" />
       <span className="lang-text">{i18n.language.toUpperCase()}</span>
