@@ -72,10 +72,6 @@ export const SettingsModal: React.FC = () => {
                   ...userSettings,
                   lang: e.target.value,
                 } as UserSettings);
-                console.log("changed lang", {
-                  ...userSettings,
-                  lang: e.target.value,
-                });
               }}
             >
               <option value="en">English</option>

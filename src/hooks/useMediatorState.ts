@@ -26,7 +26,7 @@ export function useMediatorState<T>(
     return (): void => {
       subscription.unsubscribe();
     };
-  }, []);
+  }, [mediator]);
 
   return [currentValue, setMediatorValue, currentContextValue];
 }

@@ -49,8 +49,7 @@ export const FavoritesProvider = function (
           JSON.stringify(latestSettings?.favorites)
         )
           return;
-        console.log("UserStorageService.upsertUserSettings",latestSettings?.persist_favourites &&
-          userContext.user.getValue()?.id);
+
         if (
           latestSettings?.persist_favourites &&
           userContext.user.getValue()?.id
